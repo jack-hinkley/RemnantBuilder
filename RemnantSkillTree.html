@@ -11,6 +11,7 @@
 		body {
 			background: url("background.jpg"), #111;
 			background-repeat: no-repeat;
+			background-position: top;
 			min-height: 100%;
 			width: 100%;
 			z-index: -1;
@@ -84,7 +85,7 @@
 	</div>
 
 	<div class="w-full flex justify-center">
-		<div class="block md:hidden fixed rounded bg-gray-800 py-1 px-4 bottom-2 mx-auto hover:bg-gray-900 cursor-pointer" onclick="window.scrollTo(0,0);">Back to top</div>
+		<div class="block md:hidden fixed rounded bg-gray-800 py-1 px-4 bottom-2 mx-auto hover:bg-gray-900 cursor-pointer select-none" onclick="window.scrollTo(0,0);">Back to top</div>
 	</div>
 
 	<!-- Build List -->
@@ -94,25 +95,49 @@
 
 	<!-- Build -->
 	<div id="build" class="w-full md:max-w-5xl xl:max-w-7xl mx-auto p-2" style="display: none;">
-		<div class="w-full bg-black min-h-24 rounded border border-2 border-gray-700 flex flex-wrap px-2 md:px-6 py-2 text-center md:text-left">
-			<div class="basis-full md:basis-1/2">
-				<div id="build_name" class="text-3xl text-center md:text-left"></div>
-				<div>Primary: <span id="build_primary"></span></div>
-				<div>Secondary: <span id="build_secondary"></span></div>
-				<div>Skill: <span id="build_skill"></span></div>
+		<div class="w-full bg-black min-h-24 rounded border border-2 border-gray-700 flex flex-wrap px-2 md:px-6 py-2 py-4 text-center md:text-left">
+			<div class="basis-full">
+				<!-- Build Name -->
+				<div class="flex justify-between">
+					<div id="build_name" class="text-3xl mx-auto"></div>
+					<div>
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 cursor-pointer hover:text-red-700 text-red-600" onclick="OpenModal(Modals.Delete)">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+						</svg>
+					</div>
+				</div>
+				<!-- Build Prime and Skill -->
+				<div class="flex flex-wrap w-full mt-4">
+					<div class="basis-full md:basis-1/2">
+						<div class="text-xl text-center"><span class="text-orange-400">Prime:</span> <a href="" id="build_prime"></a></div>
+					</div>
+					<div class="basis-full md:basis-1/2">
+						<div class="text-xl text-center">Skill: <span id="build_skill"></span></div>
+					</div>
+				</div>
 			</div>
-			<div class="basis-full md:basis-1/2">
-				<div><span class="text-orange-400">Prime:</span> <a href="" id="build_prime"></a></div>
-				<div><span class="text-red-400">Damage:</span> <a href="" id="build_damage"></a></div>
-				<div><span class="text-green-400">Team:</span> <a href="" id="build_team"></a></div>
-				<div><span class="text-blue-400">Utility:</span> <a href="" id="build_utility"></a></div>
-				<div><span class="text-purple-400">Relic:</span> <a href="" id="build_relic"></a></div>
+			<!-- Perks -->
+			<div class="flex flex-wrap w-full">
+				<div class="basis-full md:basis-1/2 mt-2 text-center">
+					<div class="text-2xl">Primary: <span id="build_primary"></span></div>
+					<div><span class="text-red-400">Damage:</span> <a href="" id="build_Primary_damage"></a></div>
+					<div><span class="text-green-400">Team:</span> <a href="" id="build_Primary_team"></a></div>
+					<div><span class="text-blue-400">Utility:</span> <a href="" id="build_Primary_utility"></a></div>
+					<div><span class="text-purple-400">Relic:</span> <a href="" id="build_Primary_relic"></a></div>
+				</div>
+				<div class="basis-full md:basis-1/2 mt-2 text-center">
+					<div class="text-2xl">Secondary: <span id="build_secondary"></span></div>
+					<div><span class="text-red-400">Damage:</span> <a href="" id="build_Secondary_damage"></a></div>
+					<div><span class="text-green-400">Team:</span> <a href="" id="build_Secondary_team"></a></div>
+					<div><span class="text-blue-400">Utility:</span> <a href="" id="build_Secondary_utility"></a></div>
+					<div><span class="text-purple-400">Relic:</span> <a href="" id="build_Secondary_relic"></a></div>
+				</div>
 			</div>
 		</div>
 	</div>
 
 	<!-- Cards -->
-	<div class="w-full md:max-w-5xl xl:max-w-7xl mx-auto">
+	<div class="w-full md:max-w-5xl xl:max-w-7xl mx-auto mb-10">
 		<div class="flex flex-wrap justify-center">
 			<!-- Hunter -->
 			<div id="hunter" class="basis-full md:basis-1/2 xl:basis-1/3">
@@ -129,52 +154,32 @@
 					<div id="hunter_perks">
 						<!-- Prime Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_DeadToRights" class="text-xl leading-none flex justify-between">Dead to Rights 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.DeadToRights, Archetypes.Hunter, PerkSlots.Prime)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_DeadToRights" class="text-xl leading-none flex justify-between">Dead to Rights</h2>
 							<div class="text-base text-orange-400 mb-2">Prime Perk</div>
 							<div class="text-base text-gray-300">Dealing <b>55</b> Base Ranged Weakspot Damage extends the duration of active Hunter Skills by <b>3.5s</b>. Can extend timer beyond it's initial duration.</div>
 						</div>
 						<!-- Damage Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_Deadeye" class="text-xl leading-none flex justify-between">Deadeye 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.Deadeye, Archetypes.Hunter, PerkSlots.Damage)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_Deadeye" class="text-xl leading-none flex justify-between">Deadeye</h2>
 							<div class="text-base text-red-400 mb-2">Damage Perk</div>
 							<div class="text-base text-gray-300">Gain <b>40%</b> ranged damage, <b>15%</b> Weakspot Damage and <b>5%</b> Ranged Critical Chance.</div>
 							<div class="text-base text-gray-300 mt-2">Damage increases with Hunter level.</div>
 						</div>
 						<!-- Team Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_ReturntoSender" class="text-xl leading-none flex justify-between">Return to Sender 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.ReturntoSender, Archetypes.Hunter, PerkSlots.Team)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_ReturnToSender" class="text-xl leading-none flex justify-between">Return to Sender</h2>
 							<div class="text-base text-green-400 mb-2">Team Perk</div>
 							<div class="text-base text-gray-300">Kills due to Weakspot and Critical Hits increase Ammo drops by <b>50%</b> and double the chance of Ammo drops.</div>
 						</div>
 						<!-- Utility Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_Urgency" class="text-xl leading-none flex justify-between">Urgency 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.Urgency, Archetypes.Hunter, PerkSlots.Utility)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_Urgency" class="text-xl leading-none flex justify-between">Urgency</h2>
 							<div class="text-base text-blue-400 mb-2">Utility Perk</div>
 							<div class="text-base text-gray-300">Firearms gain <b>15%</b> Reload Speed and <b>15%</b> Increased Movement Speed after a Kill. Lasts <b>5s</b>.</div>
 						</div>
 						<!-- Relic Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_Intuition" class="text-xl leading-none flex justify-between">Intuition 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.Intuition, Archetypes.Hunter, PerkSlots.Relic)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_Intuition" class="text-xl leading-none flex justify-between">Intuition</h2>
 							<div class="text-base text-purple-400 mb-2">Relic Perk</div>
 							<div class="text-base text-gray-300">Using a Relic extends the Duration of any active Hunter Skill by <b>10s</b>. Effect degrades with each subsequent use. Weakspot Kills against <b>MARKED</b> enemies increase speed of next Relic Use within <b>15s</b> by <b>5%</b>. Stacks <b>10x</b>.</div>
 						</div>
@@ -228,52 +233,32 @@
 					<div id="gunslinger_perks">
 						<!-- Prime Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_Loaded" class="text-xl leading-none flex justify-between">Loaded 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.Loaded, Archetypes.Gunslinger, PerkSlots.Prime)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_Loaded" class="text-xl leading-none flex justify-between">Loaded</h2>
 							<div class="text-base text-orange-400 mb-2">Prime Perk</div>
 							<div class="text-base text-gray-300">When activating any Gunslinger Skill, both weapons are instantly reloaded, and gain infinite reserve ammo on all weapons for <b>15s</b>.</div>
 						</div>
 						<!-- Damage Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_SwiftShot" class="text-xl leading-none flex justify-between">Swift Shot 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.SwiftShot, Archetypes.Gunslinger, PerkSlots.Damage)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_SwiftShot" class="text-xl leading-none flex justify-between">Swift Shot</h2>
 							<div class="text-base text-red-400 mb-2">Damage Perk</div>
 							<div class="text-base text-gray-300">Gain <b>15%</b> Fire Rate, <b>25%</b> Ranged Damage, and <b>5%</b> Crit Chance for all firearms.</div>
 							<div class="text-base text-gray-300 mt-2">Fire Rate and Damage increases with Gunslinger level.</div>
 						</div>
 						<!-- Team Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_PosseUp" class="text-xl leading-none flex justify-between">Posse Up 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.PosseUp, Archetypes.Gunslinger, PerkSlots.Team)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_PosseUp" class="text-xl leading-none flex justify-between">Posse Up</h2>
 							<div class="text-base text-green-400 mb-2">Team Perk</div>
 							<div class="text-base text-gray-300">Ammo pickups award <b>30%</b> additional ammo per player with the bonus split equally among teammates. Causes Ammo Box to drop on the ground.</div>
 						</div>
 						<!-- Utility Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_QuickHands" class="text-xl leading-none flex justify-between">Quick Hands 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.QuickHands, Archetypes.Gunslinger, PerkSlots.Utility)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_QuickHands" class="text-xl leading-none flex justify-between">Quick Hands</h2>
 							<div class="text-base text-blue-400 mb-2">Utility Perk</div>
 							<div class="text-base text-gray-300">Firearms gain <b>10%</b> Reload Speed. Bonus is <b>DOUBLED</b> if magazine is empty.</div>
 						</div>
 						<!-- Relic Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_SleightofHand" class="text-xl leading-none flex justify-between">Sleight of Hand 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.SleightofHand, Archetypes.Gunslinger, PerkSlots.Relic)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_SleightOfHand" class="text-xl leading-none flex justify-between">Sleight of Hand</h2>
 							<div class="text-base text-purple-400 mb-2">Relic Perk</div>
 							<div class="text-base text-gray-300">Using a Relic reloads equipped Firearm and increases Ranged Damage by <b>15%</b> for <b>10s</b>.</div>
 						</div>
@@ -321,53 +306,33 @@
 					<div id="challenger_perks">
 						<!-- Prime Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_DieHard" class="text-xl leading-none flex justify-between">Die Hard 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.DieHard, Archetypes.Challenger, PerkSlots.Prime)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_DieHard" class="text-xl leading-none flex justify-between">Die Hard</h2>
 							<div class="text-base text-orange-300 mb-2">Prime Perk</div>
 							<div class="text-base text-gray-300">When receiving fatal damage, the Challenger becomes invulnerable for <b>5s</b> and regenerates 100% of max health.</div>
 							<div class="text-base text-gray-300 mt-2">Can only happen once every <b>10</b> minutes.</div>
 						</div>
 						<!-- Damage Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_CloseQuarters" class="text-xl leading-none flex justify-between">Close Quarters 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.CloseQuarters, Archetypes.Challenger, PerkSlots.Damage)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_CloseQuarters" class="text-xl leading-none flex justify-between">Close Quarters</h2>
 							<div class="text-base text-red-400 mb-2">Damage Perk</div>
 							<div class="text-base text-gray-300">Gain up to <b>40%</b> Ranged and Melee Damage to all enemies within <b>7m</b>. Damage bonus tapers off until <b>13m</b>. Critical Chance is increased by up to <b>10%</b> at the same range.</div>
 							<div class="text-base text-gray-300 mt-2">Damage increases with Challenger level.</div>
 						</div>
 						<!-- Team Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_IntimidatingPresence" class="text-xl leading-none flex justify-between">Intimidating Presence 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.IntimidatingPresence, Archetypes.Challenger, PerkSlots.Team)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_IntimidatingPresence" class="text-xl leading-none flex justify-between">Intimidating Presence</h2>
 							<div class="text-base text-green-400 mb-2">Team Perk</div>
 							<div class="text-base text-gray-300">After activating a Challenger Skill, enemies within <b>10m</b> deal <b>10%</b> less damage for <b>15s</b>, with an additional <b>2.5%</b> damage reduction per enemy affected. (Max <b>10%</b>)</div>
 						</div>
 						<!-- Utility Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_Powerlifter" class="text-xl leading-none flex justify-between">Powerlifter 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.Powerlifter, Archetypes.Challenger, PerkSlots.Utility)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_Powerlifter" class="text-xl leading-none flex justify-between">Powerlifter</h2>
 							<div class="text-base text-blue-400 mb-2">Utility Perk</div>
 							<div class="text-base text-gray-300">Both the additional Stamina cost increase for each weight bracket and Stamina Regen Delay are reduced by <b>50%</b>.</div>
 						</div>
 						<!-- Relic Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_FaceofDanger" class="text-xl leading-none flex justify-between">Face of Danger 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.FaceofDanger, Archetypes.Challenger, PerkSlots.Relic)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_FaceOfDanger" class="text-xl leading-none flex justify-between">Face of Danger</h2>
 							<div class="text-base text-purple-400 mb-2">Relic Perk</div>
 							<div class="text-base text-gray-300">Using a Relic within <b>10m</b> of an enemy grants <b>2</b> stacks of Bulwark and <b>10%</b> Increased Damage for <b>10s</b>.</div>
 						</div>
@@ -414,52 +379,32 @@
 					<div id="handler_perks">
 						<!-- Prime Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_Bonded" class="text-xl leading-none flex justify-between">Bonded 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.Bonded, Archetypes.Handler, PerkSlots.Prime)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_Bonded" class="text-xl leading-none flex justify-between">Bonded</h2>
 							<div class="text-base text-orange-400 mb-2">Prime Perk</div>
 							<div class="text-base text-gray-300">When Handler is downed, Companion will attempt to revive them at <b>50%</b> Max Health. Can be used to revive allies with command. Downed ally must have a Dragon Heart.</div>
 						</div>
 						<!-- Damage Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_PackHunter" class="text-xl leading-none flex justify-between">Pack Hunter 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.PackHunter, Archetypes.Handler, PerkSlots.Damage)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_PackHunter" class="text-xl leading-none flex justify-between">Pack Hunter</h2>
 							<div class="text-base text-red-400 mb-2">Damage Perk</div>
 							<div class="text-base text-gray-300">Gain <b>30%</b> Ranged and Skill Damage, and <b>5%</b> Ranged and Skill Critical Chance while Companion is active and within <b>25m</b> of the player.</div>
 							<div class="text-base text-gray-300 mt-2">Damage increases with Handler level.</div>
 						</div>
 						<!-- Team Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_SpiritoftheWolf" class="text-xl leading-none flex justify-between">Spirit of the Wolf 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.SpiritoftheWolf, Archetypes.Handler, PerkSlots.Team)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_SpiritOfTheWolf" class="text-xl leading-none flex justify-between">Spirit of the Wolf</h2>
 							<div class="text-base text-green-400 mb-2">Team Perk</div>
 							<div class="text-base text-gray-300">Increases Movement Speed by <b>10%</b>. All allies within <b>10m</b> equal the Handler's Movement Speed (if faster). Reduces the Stamina Cost of all actions for all allies by <b>15%</b>.</div>
 						</div>
 						<!-- Utility Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_Teamwork" class="text-xl leading-none flex justify-between">Teamwork 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.Teamwork, Archetypes.Handler, PerkSlots.Utility)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_Teamwork" class="text-xl leading-none flex justify-between">Teamwork</h2>
 							<div class="text-base text-blue-400 mb-2">Utility Perk</div>
 							<div class="text-base text-gray-300">Handler and Companion gain <b>30%</b> increased Revive Speed. While reviving, Handler and Companion receive <b>25%</b> less damage and Companion gains <b>-1</b> Stagger.</div>
 						</div>
 						<!-- Relic Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_BestFriend" class="text-xl leading-none flex justify-between">Best Friend 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.BestFriend, Archetypes.Handler, PerkSlots.Relic)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_BestFriend" class="text-xl leading-none flex justify-between">Best Friend</h2>
 							<div class="text-base text-purple-400 mb-2">Relic Perk</div>
 							<div class="text-base text-gray-300">Using a Relic fully restores Companion health and grants them <b>25%</b> Damage and <b>35%</b> Damage Resistance for <b>15s</b>.</div>
 						</div>
@@ -514,53 +459,33 @@
 					<div id="medic_perks">
 						<!-- Prime Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_Regenerator" class="text-xl leading-none flex justify-between">Regenerator 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.Regenerator, Archetypes.Medic, PerkSlots.Prime)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_Regenerator" class="text-xl leading-none flex justify-between">Regenerator</h2>
 							<div class="text-base text-orange-400 mb-2">Prime Perk</div>
 							<div class="text-base text-gray-300">After restoring <b>250</b> Total Health to allies, regain a spent Relic charge.</div>
 							<div class="text-base text-gray-300 mt-2">Resting or Respawning at a Worldstone resets healing accumulation. Each additional player increases the healing requirement by <b>50%</b>.</div>
 						</div>
 						<!-- Damage Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_Invigorated" class="text-xl leading-none flex justify-between">Invigorated 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.Invigorated, Archetypes.Medic, PerkSlots.Damage)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_Invigorated" class="text-xl leading-none flex justify-between">Invigorated</h2>
 							<div class="text-base text-red-400 mb-2">Damage Perk</div>
 							<div class="text-base text-gray-300">Grants a <b>25%</b> increase to all Damage and <b>5%</b> Critical Chance.</div>
 							<div class="text-base text-gray-300 mt-2">Damage increases with Medic level.</div>
 						</div>
 						<!-- Team Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_Benevolence" class="text-xl leading-none flex justify-between">Benevolence 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.Benevolence, Archetypes.Medic, PerkSlots.Team)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_Benevolence" class="text-xl leading-none flex justify-between">Benevolence</h2>
 							<div class="text-base text-green-400 mb-2">Team Perk</div>
 							<div class="text-base text-gray-300">Increases Relic Efficacy by <b>15%</b> and heals nearby allies for <b>30%</b> of the total healing value, increasing to <b>60%</b> for any ally below <b>35%</b> max health.</div>
 						</div>
 						<!-- Utility Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_Backbone" class="text-xl leading-none flex justify-between">Backbone 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.Backbone, Archetypes.Medic, PerkSlots.Utility)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_Backbone" class="text-xl leading-none flex justify-between">Backbone</h2>
 							<div class="text-base text-blue-400 mb-2">Utility Perk</div>
 							<div class="text-base text-gray-300">Increases the hits Medic can take before losing Grey Health by <b>2</b>.</div>
 						</div>
 						<!-- Relic Perk -->
 						<div class="rounded bg-gray-700 p-2 mt-2">
-							<h2 id="perk_Benefactor" class="text-xl leading-none flex justify-between">Benefactor 
-								<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 cursor-pointer text-gray-200" onclick="SelectPerk(Perks.Benefactor, Archetypes.Medic, PerkSlots.Relic)">
-									<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
-								</svg></span>
-							</h2>
+							<h2 id="perk_Benefactor" class="text-xl leading-none flex justify-between">Benefactor</h2>
 							<div class="text-base text-purple-400 mb-2">Relic Perk</div>
 							<div class="text-base text-gray-300">Increases Relic Use Speed by <b>20%</b>. Relic Use gains <b>-1</b> Stagger.</div>
 						</div>
@@ -599,7 +524,6 @@
 	// Globals
 	let CurrentBuild;
 	let CurrentBuildIndex = 0;
-	let DeleteBuildIndex = 0;
 	let Builds = [];
 	let LocalStorageBuildKey = "Build_";
 
@@ -634,22 +558,22 @@
 	const Perks = {
 		DeadToRights: "DeadToRights",
 		Deadeye: "Deadeye",
-		ReturntoSender: "ReturntoSender",
+		ReturnToSender: "ReturnToSender",
 		Urgency: "Urgency",
 		Intuition: "Intuition",
 		Loaded: "Loaded",
 		SwiftShot: "SwiftShot",
 		PosseUp: "PosseUp",
 		QuickHands: "QuickHands",
-		SleightofHand: "SleightofHand",
+		SleightOfHand: "SleightOfHand",
 		DieHard: "DieHard",
 		CloseQuarters: "CloseQuarters",
 		IntimidatingPresence: "IntimidatingPresence",
 		Powerlifter: "Powerlifter",
-		FaceofDanger: "FaceofDanger",
+		FaceOfDanger: "FaceOfDanger",
 		Bonded: "Bonded",
 		PackHunter: "PackHunter",
-		SpiritoftheWolf: "SpiritoftheWolf",
+		SpiritOfTheWolf: "SpiritOfTheWolf",
 		Teamwork: "Teamwork",
 		BestFriend: "BestFriend",
 		Regenerator: "Regenerator",
@@ -657,6 +581,46 @@
 		Benevolence: "Benevolence",
 		Backbone: "Backbone",
 		Benefactor: "Benefactor"
+	}
+
+	const Hunter = {
+		Prime: "DeadToRights",
+		Damage: "Deadeye",
+		Team: "ReturnToSender",
+		Utility: "Urgency",
+		Relic: "Intuition",
+	}
+
+	const Gunslinger = {
+		Prime: "Loaded",
+		Damage: "SwiftShot",
+		Team: "PosseUp",
+		Utility: "QuickHands",
+		Relic: "SleightOfHand",
+	}
+
+	const Challenger = {
+		Prime: "DieHard",
+		Damage: "CloseQuarters",
+		Team: "IntimidatingPresence",
+		Utility: "Powerlifter",
+		Relic: "FaceOfDanger",
+	}
+
+	const Handler = {
+		Prime: "Bonded",
+		Damage: "PackHunter",
+		Team: "SpiritOfTheWolf",
+		Utility: "Teamwork",
+		Relic: "BestFriend",
+	}
+
+	const Medic = {
+		Prime: "Regenerator",
+		Damage: "Invigorated",
+		Team: "Benevolence",
+		Utility: "Backbone",
+		Relic: "Benefactor"
 	}
 
 	const Modals = {
@@ -720,9 +684,9 @@
 			// Make sure build isn't null
 			if(build != null) {
 				var buildHtml = 
-					`<div class="basis-1/3 md:basis-[20%] px-1">
+					`<div class="basis-1/2 md:basis-[20%] px-1">
 						<div class="w-full bg-gray-800 h-16 my-2 rounded p-2 cursor-pointer hover:bg-gray-700 text-center" onclick="SelectBuild(${i})">
-							${build.Name} <span class="top-0 right-2 hover:text-red-500" onclick="DeleteBuildIndex = ${i}; OpenModal('${Modals.Delete}')">x</span>
+							${build.Name}
 							<div class="flex justify-center">
 								<span class="text-${GetBuildColor(build.Primary)}-600 text-4xl leading-none">&#x2022;</span>
 								<span class="text-${GetBuildColor(build.Secondary)}-600 text-4xl leading-none">&#x2022;</span>
@@ -736,7 +700,7 @@
 		// If there is room for a new build, add the create build button
 		if(Builds.length < 5) {
 			var buildHtml = 
-				`<div class="basis-1/3 md:basis-[20%] px-1">
+				`<div class="basis-1/2 md:basis-[20%] px-1">
 					<div class="w-full bg-gray-800 h-16 my-2 rounded p-2 cursor-pointer hover:bg-gray-700 text-center" onclick="OpenModal('${Modals.Create}')">
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mt-3 mx-auto text-green-500">
 							<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -816,7 +780,8 @@
 	// Create a new build 
 	function CreateNewBuild() {
 		// Get the name of the build from the modal input
-		var name = document.getElementById('build_name_input').value;
+		var nameEle = document.getElementById('build_name_input');
+		var name = nameEle.value;
 
 		// Remove special characters
 		name = name.replace(/[^a-zA-Z0-9 ]/g, "");
@@ -829,10 +794,14 @@
 				Secondary: "",
 				Skill: "",
 				Prime: "",
-				Damage: "",
-				Team: "",
-				Utility: "",
-				Relic: ""
+				DamagePrimary: "",
+				TeamPrimary: "",
+				UtilityPrimary: "",
+				RelicPrimary: "",
+				DamageSecondary: "",
+				TeamSecondary: "",
+				UtilitySecondary: "",
+				RelicSecondary: ""
 			}
 
 			// Set the current build to the new build
@@ -848,6 +817,8 @@
 			// Alert the user
 			Alert(Alerts.Success, "New Build Created!");
 
+			nameEle.value = "";
+
 			// Reload the Builds
 			Reload();
 
@@ -862,7 +833,7 @@
 	// Delete build by the passed index
 	function DeleteBuild() {
 		// Get the build
-		var build = Builds[DeleteBuildIndex]; 
+		var build = Builds[CurrentBuildIndex]; 
 
 		// Make sure the build was found
 		if(build != null) {
@@ -881,7 +852,10 @@
 			}
 
 			// Reset the build index
-			DeleteBuildIndex = 0;
+			CurrentBuildIndex = 0;
+
+			// Select the first build
+			SelectBuild(CurrentBuildIndex);
 
 			// Close the modal
 			CloseModal(Modals.Delete);
@@ -905,44 +879,98 @@
 			CurrentBuild.Secondary = archetype;
 		}
 
+		// Set the perks based on the archetype and type
+		SetArchetypePerks(archetype, slot);
+
 		// Save changes
 		SaveBuild();
 	}
 
- id="perkperk_,"	// Select a perk
-	function SelectPerk(perk, archetype, perkslot) {
-		// Only allow perks where you have that class
-		if(archetype == CurrentBuild.Primary || archetype == CurrentBuild.Secondary) {
-			// Figure out which perk needs to be updated
-			switch(perkslot) {
-				case PerkSlots.Prime:
-					CurrentBuild.Prime = perk;
-					break;
-				case PerkSlots.Damage:
-					CurrentBuild.Damage = perk;
-					break;
-				case PerkSlots.Team:
-					CurrentBuild.Team = perk;
-					break;
-				case PerkSlots.Utility:
-					CurrentBuild.Utility = perk;
-					break;
-				case PerkSlots.Relic:
-					CurrentBuild.Relic = perk;
-					break;
-			}
-
-			// Save and reload
-			SaveBuild();
-			Reload();
-		}
-		else {
-			Alert(Alerts.Info, "You can only choose perks that are in your class.");
+	// Set the perks based on the archetype and type
+	function SetArchetypePerks(archetype, slot) {
+		switch(archetype) {
+			case Archetypes.Hunter:
+				if(slot == ArcheTypeSlots.Primary) {
+					CurrentBuild.Prime = Hunter.Prime;
+					CurrentBuild.DamagePrimary = Hunter.Damage;
+					CurrentBuild.TeamPrimary = Hunter.Team;
+					CurrentBuild.UtilityPrimary = Hunter.Utility;
+					CurrentBuild.RelicPrimary = Hunter.Relic;	
+				}
+				else {
+					CurrentBuild.DamageSecondary = Hunter.Damage;
+					CurrentBuild.TeamSecondary = Hunter.Team;
+					CurrentBuild.UtilitySecondary = Hunter.Utility;
+					CurrentBuild.RelicSecondary = Hunter.Relic;
+				}
+				break;
+			case Archetypes.Gunslinger: 
+				if(slot == ArcheTypeSlots.Primary) {
+					CurrentBuild.Prime = Gunslinger.Prime;
+					CurrentBuild.DamagePrimary = Gunslinger.Damage;
+					CurrentBuild.TeamPrimary = Gunslinger.Team;
+					CurrentBuild.UtilityPrimary = Gunslinger.Utility;
+					CurrentBuild.RelicPrimary = Gunslinger.Relic;	
+				}
+				else {
+					CurrentBuild.DamageSecondary = Gunslinger.Damage;
+					CurrentBuild.TeamSecondary = Gunslinger.Team;
+					CurrentBuild.UtilitySecondary = Gunslinger.Utility;
+					CurrentBuild.RelicSecondary = Gunslinger.Relic;
+				}
+				break;
+			case Archetypes.Challenger: 
+				if(slot == ArcheTypeSlots.Primary) {
+					CurrentBuild.Prime = Challenger.Prime;
+					CurrentBuild.DamagePrimary = Challenger.Damage;
+					CurrentBuild.TeamPrimary = Challenger.Team;
+					CurrentBuild.UtilityPrimary = Challenger.Utility;
+					CurrentBuild.RelicPrimary = Challenger.Relic;	
+				}
+				else {
+					CurrentBuild.DamageSecondary = Challenger.Damage;
+					CurrentBuild.TeamSecondary = Challenger.Team;
+					CurrentBuild.UtilitySecondary = Challenger.Utility;
+					CurrentBuild.RelicSecondary = Challenger.Relic;
+				}
+				break;
+			case Archetypes.Handler: 
+				if(slot == ArcheTypeSlots.Primary) {
+					CurrentBuild.Prime = Handler.Prime;
+					CurrentBuild.DamagePrimary = Handler.Damage;
+					CurrentBuild.TeamPrimary = Handler.Team;
+					CurrentBuild.UtilityPrimary = Handler.Utility;
+					CurrentBuild.RelicPrimary = Handler.Relic;	
+				}
+				else {
+					CurrentBuild.DamageSecondary = Handler.Damage;
+					CurrentBuild.TeamSecondary = Handler.Team;
+					CurrentBuild.UtilitySecondary = Handler.Utility;
+					CurrentBuild.RelicSecondary = Handler.Relic;
+				}
+				break;
+			case Archetypes.Medic: 
+				if(slot == ArcheTypeSlots.Primary) {
+					CurrentBuild.Prime = Archetypes.Prime;
+					CurrentBuild.DamagePrimary = Archetypes.Damage;
+					CurrentBuild.TeamPrimary = Archetypes.Team;
+					CurrentBuild.UtilityPrimary = Archetypes.Utility;
+					CurrentBuild.RelicPrimary = Archetypes.Relic;	
+				}
+				else {
+					CurrentBuild.DamageSecondary = Archetypes.Damage;
+					CurrentBuild.TeamSecondary = Archetypes.Team;
+					CurrentBuild.UtilitySecondary = Archetypes.Utility;
+					CurrentBuild.RelicSecondary = Archetypes.Relic;
+				}
+				break;
 		}
 	}
 
 	function SelectSkill() {
-
+		// Save and reload
+		SaveBuild();
+		Reload();
 	}
 
 	// Save the current build to localstorage
@@ -972,8 +1000,11 @@
 
 	// Update the build section of the HTML
 	function UpdateBuildHtml() {
+		// Get the build stat sheet element
+		var buildEle = document.getElementById("build")
+		
 		if(CurrentBuild != null) {
-			var buildEle = document.getElementById("build")
+			// Show the build stat sheet
 			buildEle.style.display = "flex";
 
 			var name = document.getElementById("build_name");
@@ -981,10 +1012,14 @@
 			var secondary = document.getElementById("build_secondary");
 			var skill = document.getElementById("build_skill");
 			var prime = document.getElementById("build_prime");
-			var damage = document.getElementById("build_damage");
-			var team = document.getElementById("build_team");
-			var utility = document.getElementById("build_utility");
-			var relic = document.getElementById("build_relic");
+			var damagePrimary = document.getElementById("build_Primary_damage");
+			var teamPrimary = document.getElementById("build_Primary_team");
+			var utilityPrimary = document.getElementById("build_Primary_utility");
+			var relicPrimary = document.getElementById("build_Primary_relic");
+			var damageSecondary = document.getElementById("build_Secondary_damage");
+			var teamSecondary = document.getElementById("build_Secondary_team");
+			var utilitySecondary = document.getElementById("build_Secondary_utility");
+			var relicSecondary = document.getElementById("build_Secondary_relic");
 
 			// Name
 			name.innerHTML = CurrentBuild.Name;
@@ -1002,21 +1037,38 @@
 			// Skill
 			skill.innerHTML = CurrentBuild.Skill;
 
-			// Perks
+			// Primary Perks
 			prime.innerHTML = CurrentBuild.Prime;
 			prime.href = "#perk_"+CurrentBuild.Prime;
 
-			damage.innerHTML = CurrentBuild.Damage;
-			damage.href = "#perk_"+CurrentBuild.Damage;
+			damagePrimary.innerHTML = CurrentBuild.DamagePrimary;
+			damagePrimary.href = "#perk_Primary_"+CurrentBuild.DamageTeamPrimary;
 
-			team.innerHTML = CurrentBuild.Team;
-			team.href = "#perk_"+CurrentBuild.Team;
+			teamPrimary.innerHTML = CurrentBuild.TeamPrimary;
+			teamPrimary.href = "#perk_Primary_"+CurrentBuild.TeamPrimary;
 
-			utility.innerHTML = CurrentBuild.Utility;
-			utility.href = "#perk_"+CurrentBuild.Utility;
+			utilityPrimary.innerHTML = CurrentBuild.UtilityPrimary;
+			utilityPrimary.href = "#perk_Primary_"+CurrentBuild.UtilityPrimary;
 
-			relic.innerHTML = CurrentBuild.Relic;
-			relic.href = "#perk_"+CurrentBuild.Relic;
+			relicPrimary.innerHTML = CurrentBuild.RelicPrimary;
+			relicPrimary.href = "#perk_Primary_"+CurrentBuild.RelicPrimary;
+
+			// Secondary Perks
+			damageSecondary.innerHTML = CurrentBuild.DamageSecondary;
+			damageSecondary.href = "#perk_Secondary_"+CurrentBuild.DamageTeamSecondary;
+
+			teamSecondary.innerHTML = CurrentBuild.TeamSecondary;
+			teamSecondary.href = "#perk_Secondary_"+CurrentBuild.TeamSecondary;
+
+			utilitySecondary.innerHTML = CurrentBuild.UtilitySecondary;
+			utilitySecondary.href = "#perk_Secondary_"+CurrentBuild.UtilitySecondary;
+
+			relicSecondary.innerHTML = CurrentBuild.RelicSecondary;
+			relicSecondary.href = "#perk_Secondary_"+CurrentBuild.RelicSecondary;
+		}
+		else {
+			// Hide the build statsheet
+			buildEle.style.display = "none";
 		}
 	}
 
